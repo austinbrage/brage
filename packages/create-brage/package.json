@@ -19,7 +19,7 @@
   },
   "files": [
     "index.js",
-    "template-*",
+    "template",
     "dist"
   ],
   "main": "index.js",
