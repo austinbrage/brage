@@ -1,0 +1,64 @@
+{
+  "name": "@brage/brage-monorepo",
+  "private": true,
+  "license": "BUSL-1.1",
+  "author": "Austin Brage",
+  "homepage": "https://brage.app",
+  "description": "Backend revolutionary architecture generation engine",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austinbrage/brage.git"
+  },
+  "bugs": {
+    "url": "https://github.com/austinbrage/brage/issues"
+  },
+  "main": "./scripts/install.js",
+  "scripts": {
+    "start": "pnpm run pack-tarball && pnpm run install-global",
+    "stop": "node ./scripts/install.js --remove",
+    "dev": "pnpm --parallel --filter \"**\" dev",
+    "build": "pnpm --filter \"**\" build",
+    "build:prod": "pnpm --filter \"**\" build:prod",
+    "link-local": "pnpm --filter \"**\" link-local",
+    "unlink-local": "pnpm --filter \"**\" unlink-local",
+    "pack-tarball": "pnpm --filter \"**\" pack-tarball",
+    "install-global": "node ./scripts/install.js",
+    "lint": "pnpm --filter \"**\" lint",
+    "typescheck": "pnpm --filter \"**\" typescheck",
+    "test-brage": "cross-env NODE_ENV=test vitest run brage.test.ts",
+    "test-create": "cross-env NODE_ENV=test vitest run create.test.ts",
+    "test-install": "cross-env NODE_ENV=test vitest run install.test.ts",
+    "test-brage:watch": "cross-env NODE_ENV=test vitest brage.test.ts",
+    "test-create:watch": "cross-env NODE_ENV=test vitest create.test.ts",
+    "publish:all": "pnpm --filter ./packages/brage publish && pnpm --filter ./packages/create-brage publish"
+  },
+  "engines": {
+    "node": ">=18.17.1",
+    "npm": ">=9.6.7"
+  },
+  "keywords": [
+    "backend",
+    "express",
+    "mysql"
+  ],
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "fs-extra": "^11.2.0",
+    "kolorist": "^1.8.0",
+    "minimist": "^1.2.8"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^20.12.7",
+    "@types/prompts": "^2.4.9",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "@typescript-eslint/parser": "^7.7.1",
+    "eslint": "^8.57.0",
+    "execa": "^8.0.1",
+    "terser": "^5.31.0",
+    "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
+    "vitest": "^1.6.0"
+  }
+}

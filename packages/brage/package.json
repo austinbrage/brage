@@ -1,0 +1,51 @@
+{
+  "name": "brage-js",
+  "version": "0.3.4",
+  "type": "module",
+  "license": "BUSL-1.1",
+  "author": "Austin Brage",
+  "homepage": "https://brage.app",
+  "description": "Backend revolutionary architecture generation engine",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austinbrage/brage.git",
+    "directory": "packages/brage"
+  },
+  "bugs": {
+    "url": "https://github.com/austinbrage/brage/issues"
+  },
+  "bin": {
+    "brage": "index.js"
+  },
+  "files": [
+    "index.js",
+    "dist"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "dev": "unbuild --stub",
+    "build": "unbuild",
+    "minify": "terser dist/index.mjs -o dist/index.mjs",
+    "build:prod": "npm run build && npm run minify",
+    "link-local": "npm link",
+    "unlink-local": "npm unlink -g brage",
+    "pack-tarball": "npm pack --pack-destination ../../",
+    "lint": "eslint ./src/**/*.ts",
+    "typescheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "engines": {
+    "node": ">=18.17.1",
+    "npm": ">=9.6.7"
+  },
+  "keywords": [
+    "backend",
+    "express",
+    "mysql2"
+  ],
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "fs-extra": "^11.2.0",
+    "minimist": "^1.2.8",
+    "kolorist": "^1.8.0"
+  }
+}
