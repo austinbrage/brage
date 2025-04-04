@@ -3,9 +3,12 @@
   "version": "0.4.2",
   "type": "module",
   "license": "BUSL-1.1",
-  "author": "Austin Brage",
-  "homepage": "https://brage.app/",
   "description": "Backend revolutionary architecture generation engine",
+  "author": {
+    "name": "Austin Brage",
+    "email": "agustinbrage19@gmail.com",
+    "url": "https://brage.app"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/austinbrage/brage.git",
