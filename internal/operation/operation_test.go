@@ -56,3 +56,31 @@ func TestCopyFile(t *testing.T) {
 		t.Fatalf("Expected mode %v, got %v", srcInfo.Mode(), destInfo.Mode())
 	}
 }
+
+func TestCopyDir(t *testing.T) {
+	srcDir := t.TempDir()
+	dstDir := t.TempDir()
+
+	// create nested dir + file
+	nested := filepath.Join(srcDir, "sub")
+	if err := os.Mkdir(nested, 0755); err != nil {
+		t.Fatalf("Failed to create nested dir: %v", err)
+	}
+	file := filepath.Join(nested, "file.txt")
+	content := []byte("hello dir copy")
+	if err := os.WriteFile(file, content, 0644); err != nil {
+		t.Fatalf("Failed to write file: %v", err)
+	}
+
+	if err := CopyDir(srcDir, dstDir); err != nil {
+		t.Fatalf("CopyDir failed: %v", err)
+	}
+
+	got, err := os.ReadFile(filepath.Join(dstDir, "sub", "file.txt"))
+	if err != nil {
+		t.Fatalf("Failed to read copied file: %v", err)
+	}
+	if string(got) != string(content) {
+		t.Errorf("Expected %q, got %q", content, got)
+	}
+}

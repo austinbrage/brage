@@ -56,3 +56,32 @@ func CopyFile(src, dest string) error {
 
 	return os.Chmod(dest, info.Mode())
 }
+
+// CopyDir copies a directory recursively from src to dst.
+func CopyDir(src, dest string) error {
+	entries, err := os.ReadDir(src)
+	if err != nil {
+		return err
+	}
+
+	if err := os.MkdirAll(dest, 0755); err != nil {
+		return err
+	}
+
+	for _, entry := range(entries) {
+		srcPath := filepath.Join(src, entry.Name())
+		destPath := filepath.Join(dest, entry.Name())
+
+		if entry.IsDir() {
+			if err := CopyDir(srcPath, destPath); err != nil {
+				return err
+			}
+		} else {
+			if err := CopyFile(srcPath, destPath); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
+}
