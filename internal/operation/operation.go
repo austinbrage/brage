@@ -1,6 +1,7 @@
 package operation
 
 import (
+	"io"
 	"os"
 	"path/filepath"
 )
@@ -24,4 +25,34 @@ func EmptyDir(dir string) error {
 	}
 
 	return nil
+}
+
+// CopyFile copies a file from src to dest
+func CopyFile(src, dest string) error {
+	sourceFile, err := os.Open(src)
+	if err != nil {
+		return err
+	}
+	
+	defer sourceFile.Close()
+
+	destFile, err := os.Create(dest)
+	if err != nil {
+		return err
+	}
+
+	defer destFile.Close()
+
+	_, err = io.Copy(destFile, sourceFile)
+	if err != nil {
+		return err
+	}
+
+	// Copy file permissions
+	info, err := os.Stat(src)
+	if err != nil {
+		return err
+	}
+
+	return os.Chmod(dest, info.Mode())
 }

@@ -27,3 +27,32 @@ func TestEmptyDir(t *testing.T) {
 		t.Fatalf("Expected .git folder to remain, got %s", entries[0].Name())
 	}
 }
+
+func TestCopyFile(t *testing.T) {
+	testDir := t.TempDir()
+	srcPath := filepath.Join(testDir, "source.txt")
+	destPath := filepath.Join(testDir, "dest.txt")
+
+	content := []byte("hello world")
+	os.WriteFile(srcPath, content, 0644)
+
+	if err := CopyFile(srcPath, destPath); err != nil {
+		t.Fatalf("CopyFile failed: %v", err)
+	}
+
+	data, err := os.ReadFile(destPath)
+	if err != nil {
+		t.Fatalf("Failed to read dest file: %v", err)
+	}
+
+	if string(data) != string(content) {
+		t.Fatalf("Expected %q, got %q", content, data)
+	}
+
+	// Check permissions match
+	srcInfo, _ := os.Stat(srcPath)
+	destInfo, _ := os.Stat(destPath)
+	if srcInfo.Mode() != destInfo.Mode() {
+		t.Fatalf("Expected mode %v, got %v", srcInfo.Mode(), destInfo.Mode())
+	}
+}
