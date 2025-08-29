@@ -7,12 +7,7 @@ import (
 )
 
 func TestEmptyDir(t *testing.T) {
-	testDir, err := os.MkdirTemp("", "testdir")
-	if err != nil {
-		t.Fatalf("Failed to create temp dir: %v", err)
-	}
-
-	defer os.RemoveAll(testDir)
+	testDir := t.TempDir()
 
 	os.WriteFile(filepath.Join(testDir, "file.text"), []byte("hello"), 0644)
 	os.Mkdir(filepath.Join(testDir, ".git"), 0755)
